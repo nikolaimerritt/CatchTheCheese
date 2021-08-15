@@ -2,51 +2,32 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CatchTheCheeseGame
+namespace CatchTheCheese
 {
-    public interface IWasteman
-    {
-
-    }
-
-    public class Nikolai : IWasteman { public void poo() { } }
-    public class DizzyNikolai : Nikolai { }
-
     public record Coord
     {
-        public int x;
-        public int y;
+        public int X;
+        public int Y;
 
         public Coord(int x, int y)
         {
-            this.x = x;
-            this.y = y;
+            X = x;
+            Y = y;
         }
 
-        public static Coord operator +(Coord fstCoord, Coord sndCoord)
-            => new Coord(fstCoord.x + sndCoord.x, fstCoord.y + sndCoord.y);
+        public static Coord operator +(Coord first, Coord second)
+            => new (first.X + second.X, first.Y + second.Y);
 
         public override string ToString()
-            => $"({this.x}, {this.y})";
+            => $"({X}, {Y})";
 
-        public static Coord operator -(Coord fstCoord, Coord sndCoord)
-            => new Coord(fstCoord.x - sndCoord.x, fstCoord.y - sndCoord.y);
+        public static Coord operator -(Coord first, Coord second)
+            => new (first.X - second.X, first.Y - second.Y);
 
-        public static void Test()
-        {
-            IWasteman waste = new DizzyNikolai();
-            switch (waste)
-            {
-                case DizzyNikolai dizzy: break;
-                case Nikolai nikolai: break;
-                default: break;
-            }
+        public double Norm()
+            => Math.Sqrt(X * X + Y * Y);
 
-            Dictionary<int, string> poo = new();
-            if (poo.TryGetValue(5, out string res))
-            {
-
-            }
-        }
+        public static double Distance(Coord first, Coord second)
+            => (second - first).Norm();
     }
 }

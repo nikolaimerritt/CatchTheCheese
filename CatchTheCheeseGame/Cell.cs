@@ -2,33 +2,45 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CatchTheCheeseGame
+namespace CatchTheCheese
 {
     public enum CellType
     {
-        EMPTY, BLOCK, ENEMY, PLAYER, GOAL
+        Empty, Block, Enemy, Player, Goal
     }
     public record Cell
     {
-        public CellType cellType { get; private set; }
+        public CellType CellType { get; private set; }
+        public static int NumCellTypes => _cellTypes.Count;
 
-        private static readonly Dictionary<CellType, string> cellTypeToStr = new Dictionary<CellType, string>()
+        private static readonly Dictionary<CellType, string> _cellTypeToString = new ()
         {
-            [CellType.EMPTY]  = "⬛",
-            [CellType.BLOCK]  = "🧱",
-            [CellType.PLAYER] = "🐁",
-            [CellType.ENEMY]  = "💀",
-            [CellType.GOAL]   = "🧀"
+            [CellType.Empty]  = "⬛",
+            [CellType.Block]  = "🧱",
+            [CellType.Player] = "🐁",
+            [CellType.Enemy]  = "💀",
+            [CellType.Goal]   = "🧀"
         };
 
+        private static readonly List<CellType> _cellTypes = _cellTypeToString.Keys.ToList();
+
         public Cell(CellType cellType) 
-            => this.cellType = cellType;
+            => CellType = cellType;
 
         public Cell(string str) 
-            => this.cellType = cellTypeToStr.FirstOrDefault(pair => pair.Value == str).Key;
+            => CellType = _cellTypeToString.FirstOrDefault(pair => pair.Value == str).Key;
 
         public override string ToString() 
-            => cellTypeToStr[this.cellType];
+            => _cellTypeToString[CellType];
 
+        public List<double> OneHotEncode()
+        {
+            List<double> encoding = new(NumCellTypes);
+            for (int i = 0; i < NumCellTypes; i++)
+            {
+                encoding.Add(_cellTypes[i] == CellType ? 1 : 0);
+            }
+            return encoding;
+        }
     }
 }

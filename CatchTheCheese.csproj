@@ -16,8 +16,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
-      <HintPath>..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll</HintPath>
+    <Reference Include="NeuralNet">
+      <HintPath>..\QLearner\QLearner\bin\Debug\net5.0\NeuralNet.dll</HintPath>
+    </Reference>
+    <Reference Include="QLearner">
+      <HintPath>..\QLearner\QLearner\bin\Debug\net5.0\QLearner.dll</HintPath>
     </Reference>
   </ItemGroup>
 
