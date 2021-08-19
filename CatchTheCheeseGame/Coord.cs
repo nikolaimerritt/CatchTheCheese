@@ -6,8 +6,8 @@ namespace CatchTheCheese
 {
     public record Coord
     {
-        public int X;
-        public int Y;
+        public readonly int X;
+        public readonly int Y;
 
         public Coord(int x, int y)
         {

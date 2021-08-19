@@ -10,16 +10,16 @@ namespace CatchTheCheese
     }
     public record Cell
     {
-        public CellType CellType { get; private set; }
+        public readonly CellType CellType;
         public static int NumCellTypes => _cellTypes.Count;
 
         private static readonly Dictionary<CellType, string> _cellTypeToString = new ()
         {
-            [CellType.Empty]  = "⬛",
-            [CellType.Block]  = "🧱",
-            [CellType.Player] = "🐁",
-            [CellType.Enemy]  = "💀",
-            [CellType.Goal]   = "🧀"
+            [CellType.Empty]  = "=",
+            [CellType.Block]  = "&",
+            [CellType.Player] = "*",
+            [CellType.Enemy]  = "O",
+            [CellType.Goal]   = "C"
         };
 
         private static readonly List<CellType> _cellTypes = _cellTypeToString.Keys.ToList();
@@ -30,17 +30,7 @@ namespace CatchTheCheese
         public Cell(string str) 
             => CellType = _cellTypeToString.FirstOrDefault(pair => pair.Value == str).Key;
 
-        public override string ToString() 
+        public override string ToString()
             => _cellTypeToString[CellType];
-
-        public List<double> OneHotEncode()
-        {
-            List<double> encoding = new(NumCellTypes);
-            for (int i = 0; i < NumCellTypes; i++)
-            {
-                encoding.Add(_cellTypes[i] == CellType ? 1 : 0);
-            }
-            return encoding;
-        }
     }
 }

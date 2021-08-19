@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using DeepLearning;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualBasic.FileIO;
@@ -8,15 +9,20 @@ namespace CatchTheCheese
 {
     public static class GameStateFactory
     {
-        public static GameState ReadFromCSV(string filepath)
+        public static MouseMaze ReadFromCSV(string filepath)
         {
             List<Cell[]> rows = new();
             using TextFieldParser parser = new(filepath);
             parser.SetDelimiters(",");
             while (!parser.EndOfData)
-                rows.Add(parser.ReadFields().Select(field => new Cell(field)).ToArray());
+            {
+                string[] fields = parser.ReadFields();
+                Cell[] cells = fields.Select(field => new Cell(field)).ToArray();
+                rows.Add(cells);
+            }
 
-            return new GameState(JaggedToGrid(rows), null);
+            Cell[,] grid = JaggedToGrid(rows);
+            return new MouseMaze(grid);
         }
 
         private static T[,] JaggedToGrid<T> (IList<T[]> jagged)
